@@ -17,7 +17,8 @@ import multer from 'multer';
 
 import cors from 'cors';
 
-mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.mnmrbv1.mongodb.net/blog?retryWrites=true&w=majority')
+// mongoose.connect('mongodb+srv://admin:wwwwww@cluster0.mnmrbv1.mongodb.net/blog?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URI)
 	.then(() => console.log('DB ok'))
 	.catch((err) => console.log('DB error', err));
 
@@ -60,7 +61,7 @@ app.post('/posts', checkAuth, postCreateVlidation, handleValidationErrors, PostC
 app.delete('/posts/:id', checkAuth, PostController.remove);
 app.patch('/posts/:id', checkAuth, postCreateVlidation, handleValidationErrors, PostController.update);
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
 	if (err) console.log(err);
 	console.log('Server OK');
 });
